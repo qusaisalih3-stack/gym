@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A premium gym and fitness website for memberships, trainers, training programs, BMI tools, and studio contact.">
+  <title>ForgeFit | Premium Fitness Club</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="loader" aria-label="Loading website">
+    <div class="loader__mark" aria-hidden="true"></div>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="ForgeFit home">
+        <span class="brand__icon"><i class="fa-solid fa-dumbbell"></i></span>
+        <span>ForgeFit</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a class="nav-link active" href="#home">Home</a></li>
+        <li><a class="nav-link" href="#about">About</a></li>
+        <li><a class="nav-link" href="#plans">Plans</a></li>
+        <li><a class="nav-link" href="#trainers">Trainers</a></li>
+        <li><a class="nav-link" href="#programs">Programs</a></li>
+        <li><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+
+      <button class="theme-toggle" type="button" aria-label="Toggle dark and light mode">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero__media" aria-hidden="true"></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content reveal">
+        <p class="eyebrow">Elite strength. Measurable progress.</p>
+        <h1>Build a body that performs as hard as it looks.</h1>
+        <p class="hero__text">Train inside a premium club built for serious coaching, smarter programming, and the kind of atmosphere that makes consistency easier.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#plans">Start Membership</a>
+          <a class="btn btn--ghost" href="#programs">Explore Programs</a>
+        </div>
+      </div>
+      <div class="hero__stats reveal">
+        <div><strong>24/7</strong><span>Club Access</span></div>
+        <div><strong>1:1</strong><span>Coaching</span></div>
+        <div><strong>95%</strong><span>Goal Completion</span></div>
+      </div>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="container about__grid">
+        <div class="section-copy reveal">
+          <p class="eyebrow">About ForgeFit</p>
+          <h2>Designed for people who expect more from their training.</h2>
+          <p>ForgeFit combines performance coaching, luxury recovery, and progressive strength systems in a space made for focused work. Every membership includes onboarding, goal mapping, and access to expert guidance.</p>
+          <div class="about__values">
+            <article>
+              <i class="fa-solid fa-bullseye"></i>
+              <h3>Mission</h3>
+              <p>Make professional fitness coaching accessible, accountable, and results-driven.</p>
+            </article>
+            <article>
+              <i class="fa-solid fa-eye"></i>
+              <h3>Vision</h3>
+              <p>Become the fitness club people trust for lifelong strength, health, and confidence.</p>
+            </article>
+          </div>
+        </div>
+        <div class="about__image reveal">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85" alt="Modern gym training floor with strength equipment" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <section class="section features" id="why">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Why Choose Us</p>
+          <h2>Everything serious training needs.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <i class="fa-solid fa-user-shield"></i>
+            <h3>Certified Coaches</h3>
+            <p>Evidence-based programming from specialists in strength, mobility, and conditioning.</p>
+          </article>
+          <article class="feature-card reveal">
+            <i class="fa-solid fa-heart-pulse"></i>
+            <h3>Performance Tracking</h3>
+            <p>Monthly check-ins, body metrics, and smart progression keep your plan honest.</p>
+          </article>
+          <article class="feature-card reveal">
+            <i class="fa-solid fa-spa"></i>
+            <h3>Recovery Zone</h3>
+            <p>Mobility stations, guided stretching, and recovery tools help you train sustainably.</p>
+          </article>
+          <article class="feature-card reveal">
+            <i class="fa-solid fa-clock"></i>
+            <h3>Flexible Access</h3>
+            <p>Extended club hours, app bookings, and class schedules that fit real life.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section plans" id="plans">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Membership Plans</p>
+          <h2>Choose the level that matches your ambition.</h2>
+        </div>
+        <div class="pricing-grid">
+          <article class="plan-card reveal">
+            <h3>Basic</h3>
+            <p class="plan-card__price">$39<span>/mo</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Gym floor access</li>
+              <li><i class="fa-solid fa-check"></i> Locker rooms</li>
+              <li><i class="fa-solid fa-check"></i> Starter fitness assessment</li>
+              <li><i class="fa-solid fa-minus"></i> Personal coaching</li>
+            </ul>
+            <a class="btn btn--ghost" href="#contact">Join Basic</a>
+          </article>
+          <article class="plan-card plan-card--featured reveal">
+            <span class="badge">Most Popular</span>
+            <h3>Standard</h3>
+            <p class="plan-card__price">$69<span>/mo</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Everything in Basic</li>
+              <li><i class="fa-solid fa-check"></i> Group classes</li>
+              <li><i class="fa-solid fa-check"></i> Monthly coaching review</li>
+              <li><i class="fa-solid fa-check"></i> Nutrition guide</li>
+            </ul>
+            <a class="btn btn--primary" href="#contact">Join Standard</a>
+          </article>
+          <article class="plan-card reveal">
+            <h3>Premium</h3>
+            <p class="plan-card__price">$129<span>/mo</span></p>
+            <ul>
+              <li><i class="fa-solid fa-check"></i> Everything in Standard</li>
+              <li><i class="fa-solid fa-check"></i> Weekly 1:1 coaching</li>
+              <li><i class="fa-solid fa-check"></i> Recovery lounge</li>
+              <li><i class="fa-solid fa-check"></i> Custom performance plan</li>
+            </ul>
+            <a class="btn btn--ghost" href="#contact">Join Premium</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section trainers" id="trainers">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Expert Trainers</p>
+          <h2>Coaches who know how to move people forward.</h2>
+        </div>
+        <div class="trainer-grid">
+          <article class="trainer-card reveal">
+            <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=700&q=85" alt="Trainer Maya Rivera coaching strength training" loading="lazy">
+            <div class="trainer-card__body">
+              <h3>Maya Rivera</h3>
+              <p>8 years | Strength & Mobility</p>
+              <div class="socials" aria-label="Maya Rivera social links">
+                <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+              </div>
+            </div>
+          </article>
+          <article class="trainer-card reveal">
+            <img src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=700&q=85" alt="Trainer Marcus King in a fitness studio" loading="lazy">
+            <div class="trainer-card__body">
+              <h3>Marcus King</h3>
+              <p>11 years | Bodybuilding</p>
+              <div class="socials" aria-label="Marcus King social links">
+                <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+              </div>
+            </div>
+          </article>
+          <article class="trainer-card reveal">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=700&q=85" alt="Trainer Lena Brooks leading cardio training" loading="lazy">
+            <div class="trainer-card__body">
+              <h3>Lena Brooks</h3>
+              <p>6 years | Cardio & Weight Loss</p>
+              <div class="socials" aria-label="Lena Brooks social links">
+                <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tools" id="bmi">
+      <div class="container tools__grid">
+        <div class="section-copy reveal">
+          <p class="eyebrow">BMI Calculator</p>
+          <h2>Get a quick health benchmark before your first session.</h2>
+          <p>BMI is a starting point, not a full diagnosis. Our coaches pair it with strength, lifestyle, and body composition data for a better plan.</p>
+        </div>
+        <form class="bmi-card reveal" id="bmiForm" novalidate>
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" name="height" min="80" max="250" placeholder="178" required>
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" name="weight" min="25" max="300" placeholder="82" required>
+          <button class="btn btn--primary" type="submit">Calculate BMI</button>
+          <output class="bmi-result" id="bmiResult" aria-live="polite">Enter your details to see your result.</output>
+        </form>
+      </div>
+    </section>
+
+    <section class="section programs" id="programs">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Training Programs</p>
+          <h2>Focused tracks for every goal.</h2>
+        </div>
+        <div class="program-grid">
+          <article class="program-card reveal"><i class="fa-solid fa-dumbbell"></i><h3>Strength</h3><p>Progressive lifting cycles with form coaching and recovery planning.</p></article>
+          <article class="program-card reveal"><i class="fa-solid fa-person-running"></i><h3>Cardio</h3><p>Conditioning sessions that build engine capacity without burning you out.</p></article>
+          <article class="program-card reveal"><i class="fa-solid fa-fire-flame-curved"></i><h3>Weight Loss</h3><p>Training, nutrition habits, and weekly accountability for sustainable fat loss.</p></article>
+          <article class="program-card reveal"><i class="fa-solid fa-bolt"></i><h3>CrossFit</h3><p>High-skill functional workouts scaled for smart intensity and safe progression.</p></article>
+          <article class="program-card reveal"><i class="fa-solid fa-medal"></i><h3>Bodybuilding</h3><p>Hypertrophy splits, posing support, and precision volume management.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section gallery" id="gallery">
+      <div class="container">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Gallery</p>
+          <h2>Inside the ForgeFit floor.</h2>
+        </div>
+        <div class="gallery-grid">
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=900&q=85" alt="Gym strength area with machines" loading="lazy"></button>
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=85" alt="Athlete lifting dumbbells" loading="lazy"></button>
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=900&q=85" alt="Boxing and functional fitness training" loading="lazy"></button>
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=900&q=85" alt="Modern cardio training space" loading="lazy"></button>
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=85" alt="Barbell plates and lifting rack" loading="lazy"></button>
+          <button class="gallery-item reveal" type="button"><img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=900&q=85" alt="Group fitness class in studio" loading="lazy"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section testimonials" id="testimonials">
+      <div class="container testimonials__grid">
+        <div class="section-copy reveal">
+          <p class="eyebrow">Member Stories</p>
+          <h2>Results people can feel outside the gym.</h2>
+        </div>
+        <div class="testimonial-slider reveal" aria-roledescription="carousel">
+          <div class="testimonial-track" id="testimonialTrack">
+            <article class="testimonial-slide">
+              <p>"The coaching is precise, the space is beautiful, and I finally have a plan I can stick to."</p>
+              <h3>Jordan Miles</h3>
+              <span>Lost 28 lbs in 7 months</span>
+            </article>
+            <article class="testimonial-slide">
+              <p>"ForgeFit helped me rebuild strength after an injury with patience and serious expertise."</p>
+              <h3>Ariana Chen</h3>
+              <span>Premium member</span>
+            </article>
+            <article class="testimonial-slide">
+              <p>"It feels like a private club with the energy of a performance gym. Best investment I made."</p>
+              <h3>Noah Bennett</h3>
+              <span>Standard member</span>
+            </article>
+          </div>
+          <div class="slider-controls">
+            <button type="button" id="prevTestimonial" aria-label="Previous testimonial"><i class="fa-solid fa-arrow-left"></i></button>
+            <button type="button" id="nextTestimonial" aria-label="Next testimonial"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="ForgeFit statistics">
+      <div class="container stats__grid">
+        <div class="stat reveal"><strong data-counter="4200">0</strong><span>Members</span></div>
+        <div class="stat reveal"><strong data-counter="32">0</strong><span>Trainers</span></div>
+        <div class="stat reveal"><strong data-counter="18">0</strong><span>Awards</span></div>
+        <div class="stat reveal"><strong data-counter="6">0</strong><span>Branches</span></div>
+      </div>
+    </section>
+
+    <section class="section faq" id="faq">
+      <div class="container faq__grid">
+        <div class="section-copy reveal">
+          <p class="eyebrow">FAQ</p>
+          <h2>Questions before your first visit?</h2>
+        </div>
+        <div class="accordion reveal">
+          <article class="accordion-item">
+            <button type="button" aria-expanded="false">Can beginners join ForgeFit?<i class="fa-solid fa-plus"></i></button>
+            <p>Yes. Every new member receives a movement screen and a beginner-friendly training path.</p>
+          </article>
+          <article class="accordion-item">
+            <button type="button" aria-expanded="false">Do I need to book classes?<i class="fa-solid fa-plus"></i></button>
+            <p>Class booking is recommended through the member app so coaches can manage capacity.</p>
+          </article>
+          <article class="accordion-item">
+            <button type="button" aria-expanded="false">Can I freeze my membership?<i class="fa-solid fa-plus"></i></button>
+            <p>Standard and Premium plans include freeze options for travel, illness, or schedule changes.</p>
+          </article>
+          <article class="accordion-item">
+            <button type="button" aria-expanded="false">Is nutrition coaching included?<i class="fa-solid fa-plus"></i></button>
+            <p>Standard includes a nutrition guide. Premium includes recurring habit coaching and reviews.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div class="contact__info reveal">
+          <p class="eyebrow">Contact</p>
+          <h2>Book a tour or speak with a coach.</h2>
+          <p><i class="fa-solid fa-location-dot"></i> 1200 Iron District Ave, Los Angeles, CA</p>
+          <p><i class="fa-solid fa-phone"></i> (555) 018-4470</p>
+          <p><i class="fa-solid fa-envelope"></i> hello@forgefit.example</p>
+          <div class="map-placeholder" role="img" aria-label="Google Maps placeholder showing ForgeFit club location">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <span>Google Maps Location</span>
+          </div>
+        </div>
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <div class="form-field">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+            <small></small>
+          </div>
+          <div class="form-field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+            <small></small>
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+            <small></small>
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <small></small>
+          </div>
+          <button class="btn btn--primary" type="submit">Send Message</button>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a class="brand" href="#home">
+          <span class="brand__icon"><i class="fa-solid fa-dumbbell"></i></span>
+          <span>ForgeFit</span>
+        </a>
+        <p>Premium coaching, performance facilities, and a club culture built for progress.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.facebook.com/" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.youtube.com/" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="#about">About</a>
+        <a href="#plans">Membership</a>
+        <a href="#trainers">Trainers</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <form class="newsletter" id="newsletterForm" novalidate>
+        <h3>Newsletter</h3>
+        <label for="newsletterEmail">Get training notes and offers.</label>
+        <div>
+          <input type="email" id="newsletterEmail" placeholder="Email address" required>
+          <button type="submit" aria-label="Subscribe"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+        <p id="newsletterStatus" aria-live="polite"></p>
+      </form>
+    </div>
+    <p class="footer__bottom">&copy; 2026 ForgeFit. All rights reserved.</p>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Gallery image preview">
+    <button type="button" class="lightbox__close" aria-label="Close preview"><i class="fa-solid fa-xmark"></i></button>
+    <img src="" alt="">
+  </div>
+
+  <script src="js/bmi.js"></script>
+  <script src="js/slider.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
