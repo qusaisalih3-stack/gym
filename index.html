@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة العملاء</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Container -->
+    <div class="app-container">
+
+        <!-- Navigation Header -->
+        <header class="app-header">
+            <div class="header-brand">
+                <i class="fa-solid me-2 fa-users-gear brand-icon"></i>
+                <h1 class="brand-title">نظام إدارة العملاء</h1>
+            </div>
+            <nav class="header-nav">
+                <button id="navToDatabaseBtn" class="btn btn-primary nav-btn">
+                    <i class="fa-solid fa-database"></i>
+                    <span>البحث وعرض البيانات</span>
+                </button>
+                <button id="navToRegisterBtn" class="btn btn-outline nav-btn hidden">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>الرئيسية / إدخال جديد</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content Wrapper -->
+        <main class="main-content">
+
+            <!-- 1. Main Registration View -->
+            <section id="registrationView" class="view-section active">
+                <div class="card form-card">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
+                        <h2>تسجيل بيانات عميل جديد</h2>
+                    </div>
+                    <form id="clientRegisterForm" class="client-form" novalidate>
+                        <div class="form-group">
+                            <label for="clientName">
+                                <i class="fa-solid fa-user"></i> اسم المستخدم <span class="required-star">*</span>
+                            </label>
+                            <input type="text" id="clientName" class="form-control" placeholder="أدخل اسم العميل الكامل" required>
+                            <span class="error-msg" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">
+                                <i class="fa-solid fa-phone"></i> رقم الهاتف <span class="required-star">*</span>
+                            </label>
+                            <input type="tel" id="phoneNumber" class="form-control" placeholder="أدخل رقم الهاتف (مثال: 0501234567)" required>
+                            <span class="error-msg" id="phoneError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nationalId">
+                                <i class="fa-solid fa-id-card"></i> رقم الهوية <span class="required-star">*</span>
+                            </label>
+                            <input type="text" id="nationalId" class="form-control" placeholder="أدخل رقم الهوية الوطني" required>
+                            <span class="error-msg" id="idError"></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" id="saveBtn" class="btn btn-success btn-block">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>حفظ</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 2. Dedicated Database & Search View -->
+            <section id="databaseView" class="view-section hidden">
+
+                <!-- Search Section -->
+                <div class="card search-card">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <h2>قاعدة البيانات والبحث</h2>
+                    </div>
+                    <div class="search-box-wrapper">
+                        <form id="searchForm" class="search-form">
+                            <div class="search-input-group">
+                                <i class="fa-solid fa-id-card search-icon"></i>
+                                <input type="text" id="searchInput" class="form-control search-input" placeholder="أدخل رقم الهوية للبحث..." required>
+                            </div>
+                            <button type="submit" id="searchBtn" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>بحث</span>
+                            </button>
+                            <button type="button" id="resetSearchBtn" class="btn btn-secondary hidden">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>إعادة ضبط</span>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Search Result Section -->
+                    <div id="searchResultArea" class="search-result-area hidden">
+                        <!-- Dynamic content injected here -->
+                    </div>
+                </div>
+
+                <!-- Full Database Table View -->
+                <div class="card database-card">
+                    <div class="card-header database-header">
+                        <div class="header-title-group">
+                            <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
+                            <h2>جميع العملاء المسجلين</h2>
+                            <span id="clientCountBadge" class="badge">0 عميل</span>
+                        </div>
+                        <div class="header-action-group">
+                            <button id="exportCsvBtn" class="btn btn-export">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span>تصدير نسخة احتياطية (CSV)</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم المستخدم</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>رقم الهوية</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientsTableBody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty state message -->
+                    <div id="emptyDatabaseState" class="empty-state hidden">
+                        <i class="fa-solid fa-folder-open empty-icon"></i>
+                        <p>لا توجد بيانات مسجلة في قاعدة البيانات حالياً</p>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>نظام إدارة العملاء &copy; 2025 - جميع الحقوق محفوظة</p>
+        </footer>
+
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-pen"></i> تعديل بيانات العميل</h3>
+                <button type="button" class="close-modal-btn" id="closeEditModalBtn">&times;</button>
+            </div>
+            <form id="editClientForm" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="originalNationalId">
+
+                    <div class="form-group">
+                        <label for="editClientName">
+                            <i class="fa-solid fa-user"></i> اسم المستخدم <span class="required-star">*</span>
+                        </label>
+                        <input type="text" id="editClientName" class="form-control" required>
+                        <span class="error-msg" id="editNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editPhoneNumber">
+                            <i class="fa-solid fa-phone"></i> رقم الهاتف <span class="required-star">*</span>
+                        </label>
+                        <input type="tel" id="editPhoneNumber" class="form-control" required>
+                        <span class="error-msg" id="editPhoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editNationalId">
+                            <i class="fa-solid fa-id-card"></i> رقم الهوية <span class="required-star">*</span>
+                        </label>
+                        <input type="text" id="editNationalId" class="form-control" required>
+                        <span class="error-msg" id="editIdError"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelEditBtn" class="btn btn-secondary">إلغاء</button>
+                    <button type="submit" id="saveEditBtn" class="btn btn-primary">
+                        <i class="fa-solid fa-check"></i> حفظ التعديلات
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- General Confirmation Modal -->
+    <div id="confirmModal" class="modal-backdrop hidden">
+        <div class="modal-content modal-dialog-confirm">
+            <div class="modal-header">
+                <h3 id="confirmModalTitle"><i class="fa-solid fa-triangle-exclamation text-warning"></i> تأكيد العملية</h3>
+                <button type="button" class="close-modal-btn" id="closeConfirmModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmModalMessage">هل أنت متأكد من تنفيذ هذه العملية؟</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="confirmCancelBtn" class="btn btn-secondary">إلغاء</button>
+                <button type="button" id="confirmOkBtn" class="btn btn-danger">تأكيد</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Custom App Script -->
+    <script src="app.js"></script>
+</body>
+</html>
