@@ -3,233 +3,771 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إدارة العملاء</title>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Tajawal -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <title>متابع أيام العمل الشخصي</title>
+    <style>
+        /* ==========================================
+           Reset & CSS Variables
+           ========================================== */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #eff6ff;
+            --danger-color: #dc2626;
+            --danger-hover: #b91c1c;
+            --danger-light: #fef2f2;
+            --success-color: #16a34a;
+            --success-light: #f0fdf4;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           App Shell Layout
+           ========================================== */
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header.app-header {
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .header-title-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header-title-group svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--primary-color);
+        }
+
+        .app-header h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .app-header p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ==========================================
+           Views
+           ========================================== */
+        .view-section {
+            display: block;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           Card Component
+           ========================================== */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header-line svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--primary-color);
+        }
+
+        .card-header-line h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        /* ==========================================
+           Forms & Controls
+           ========================================== */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        label svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+        }
+
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            font-size: 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+            background-color: #ffffff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Buttons Grid */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e2e8f0;
+        }
+
+        .btn-danger-icon {
+            background: transparent;
+            border: none;
+            color: var(--danger-color);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-danger-icon:hover {
+            background-color: var(--danger-light);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ==========================================
+           Summary Card
+           ========================================== */
+        .summary-card {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 20px;
+        }
+
+        .summary-info h3 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .summary-count {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 2px;
+        }
+
+        .summary-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .summary-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: #ffffff;
+        }
+
+        /* ==========================================
+           Workday List Items
+           ========================================== */
+        .workday-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .workday-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .workday-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .workday-details {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .workday-date-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.05rem;
+        }
+
+        .workday-date-badge svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--primary-color);
+        }
+
+        .workday-subdate {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .workday-notes {
+            font-size: 0.925rem;
+            color: var(--text-main);
+            background: var(--bg-color);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 4px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            border: 1px dashed var(--border-color);
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            fill: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================
+           Toast Feedback Notification
+           ========================================== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .toast {
+            background-color: var(--text-main);
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+
+        .toast-success {
+            background-color: #0f172a;
+            border-right: 4px solid var(--success-color);
+        }
+
+        .toast-danger {
+            background-color: #0f172a;
+            border-right: 4px solid var(--danger-color);
+        }
+
+        .toast svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .toast-success svg {
+            fill: var(--success-color);
+        }
+
+        .toast-danger svg {
+            fill: var(--danger-color);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           Footer
+           ========================================== */
+        footer.app-footer {
+            text-align: center;
+            margin-top: auto;
+            padding: 16px 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
 </head>
 <body>
-    <!-- App Container -->
+
     <div class="app-container">
 
-        <!-- Navigation Header -->
+        <!-- App Header -->
         <header class="app-header">
-            <div class="header-brand">
-                <i class="fa-solid me-2 fa-users-gear brand-icon"></i>
-                <h1 class="brand-title">نظام إدارة العملاء</h1>
+            <div class="header-title-group">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/>
+                </svg>
+                <h1>متابع أيام العمل الشخصي</h1>
             </div>
-            <nav class="header-nav">
-                <button id="navToDatabaseBtn" class="btn btn-primary nav-btn">
-                    <i class="fa-solid fa-database"></i>
-                    <span>البحث وعرض البيانات</span>
-                </button>
-                <button id="navToRegisterBtn" class="btn btn-outline nav-btn hidden">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <span>الرئيسية / إدخال جديد</span>
-                </button>
-            </nav>
+            <p>تتبع وثق أيام عملك بدقة وسهولة دون الحاجة لإنترنت</p>
         </header>
 
-        <!-- Main Content Wrapper -->
-        <main class="main-content">
-
-            <!-- 1. Main Registration View -->
-            <section id="registrationView" class="view-section active">
-                <div class="card form-card">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
-                        <h2>تسجيل بيانات عميل جديد</h2>
-                    </div>
-                    <form id="clientRegisterForm" class="client-form" novalidate>
-                        <div class="form-group">
-                            <label for="clientName">
-                                <i class="fa-solid fa-user"></i> اسم المستخدم <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="clientName" class="form-control" placeholder="أدخل اسم العميل الكامل" required>
-                            <span class="error-msg" id="nameError"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phoneNumber">
-                                <i class="fa-solid fa-phone"></i> رقم الهاتف <span class="required-star">*</span>
-                            </label>
-                            <input type="tel" id="phoneNumber" class="form-control" placeholder="أدخل رقم الهاتف (مثال: 0501234567)" required>
-                            <span class="error-msg" id="phoneError"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nationalId">
-                                <i class="fa-solid fa-id-card"></i> رقم الهوية <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="nationalId" class="form-control" placeholder="أدخل رقم الهوية الوطني" required>
-                            <span class="error-msg" id="idError"></span>
-                        </div>
-
-                        <div class="form-actions">
-                            <button type="submit" id="saveBtn" class="btn btn-success btn-block">
-                                <i class="fa-solid fa-floppy-disk"></i>
-                                <span>حفظ</span>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- 2. Dedicated Database & Search View -->
-            <section id="databaseView" class="view-section hidden">
-
-                <!-- Search Section -->
-                <div class="card search-card">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-                        <h2>قاعدة البيانات والبحث</h2>
-                    </div>
-                    <div class="search-box-wrapper">
-                        <form id="searchForm" class="search-form">
-                            <div class="search-input-group">
-                                <i class="fa-solid fa-id-card search-icon"></i>
-                                <input type="text" id="searchInput" class="form-control search-input" placeholder="أدخل رقم الهوية للبحث..." required>
-                            </div>
-                            <button type="submit" id="searchBtn" class="btn btn-primary">
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                                <span>بحث</span>
-                            </button>
-                            <button type="button" id="resetSearchBtn" class="btn btn-secondary hidden">
-                                <i class="fa-solid fa-rotate-left"></i>
-                                <span>إعادة ضبط</span>
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Search Result Section -->
-                    <div id="searchResultArea" class="search-result-area hidden">
-                        <!-- Dynamic content injected here -->
-                    </div>
+        <!-- VIEW 1: Log Workday (تخزين يوم العمل) -->
+        <section id="viewLog" class="view-section">
+            <div class="card">
+                <div class="card-header-line">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM11 10h2v3h3v2h-3v3h-2v-3H8v-2h3z"/>
+                    </svg>
+                    <h2>تسجيل يوم عمل جديد</h2>
                 </div>
 
-                <!-- Full Database Table View -->
-                <div class="card database-card">
-                    <div class="card-header database-header">
-                        <div class="header-title-group">
-                            <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
-                            <h2>جميع العملاء المسجلين</h2>
-                            <span id="clientCountBadge" class="badge">0 عميل</span>
-                        </div>
-                        <div class="header-action-group">
-                            <button id="exportCsvBtn" class="btn btn-export">
-                                <i class="fa-solid fa-file-csv"></i>
-                                <span>تصدير نسخة احتياطية (CSV)</span>
-                            </button>
-                        </div>
+                <form id="workdayForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="workDate">
+                            <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                            تاريخ يوم العمل
+                        </label>
+                        <input type="date" id="workDate" required>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>اسم المستخدم</th>
-                                    <th>رقم الهاتف</th>
-                                    <th>رقم الهوية</th>
-                                    <th>تاريخ التسجيل</th>
-                                    <th>الإجراءات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="clientsTableBody">
-                                <!-- Dynamic rows -->
-                            </tbody>
-                        </table>
+                    <div class="form-group">
+                        <label for="workNotes">
+                            <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                            ملاحظات تفصيلية (اختياري)
+                        </label>
+                        <textarea id="workNotes" placeholder="أدخل ساعات العمل، المهام المنجزة، أو أي تفاصيل أخرى..."></textarea>
                     </div>
 
-                    <!-- Empty state message -->
-                    <div id="emptyDatabaseState" class="empty-state hidden">
-                        <i class="fa-solid fa-folder-open empty-icon"></i>
-                        <p>لا توجد بيانات مسجلة في قاعدة البيانات حالياً</p>
+                    <div class="button-group">
+                        <button type="submit" id="saveWorkdayBtn" class="btn btn-primary">
+                            <svg viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                            <span>تخزين يوم العمل</span>
+                        </button>
+                        <button type="button" id="navToSavedBtn" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24"><path d="M4 14h4v-4H4v4zm0 5h4v-4H4v4zM4 9h4V5H4v4zm5 5h12v-4H9v4zm0 5h12v-4H9v4zM9 5v4h12V5H9z"/></svg>
+                            <span>أيام العمل</span>
+                        </button>
                     </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- VIEW 2: Saved Workdays (أيام العمل) -->
+        <section id="viewSaved" class="view-section hidden">
+            <!-- Summary Card -->
+            <div class="summary-card">
+                <div class="summary-info">
+                    <h3>إجمالي أيام العمل المسجلة</h3>
+                    <div id="totalDaysCount" class="summary-count">0</div>
                 </div>
+                <div class="summary-icon">
+                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM7 11h5v5H7z"/></svg>
+                </div>
+            </div>
 
-            </section>
+            <div style="margin-bottom: 16px;">
+                <button type="button" id="navToLogBtn" class="btn btn-secondary">
+                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    <span>تسجيل يوم عمل جديد</span>
+                </button>
+            </div>
 
-        </main>
+            <!-- Workdays List -->
+            <div id="workdayListContainer" class="workday-list">
+                <!-- Dynamically populated -->
+            </div>
+        </section>
 
         <!-- Footer -->
         <footer class="app-footer">
-            <p>نظام إدارة العملاء &copy; 2025 - جميع الحقوق محفوظة</p>
+            <p>تطبيق محلي يعمل 100% دون اتصال بالإنترنت</p>
         </footer>
 
-    </div>
-
-    <!-- Edit Modal -->
-    <div id="editModal" class="modal-backdrop hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fa-solid fa-user-pen"></i> تعديل بيانات العميل</h3>
-                <button type="button" class="close-modal-btn" id="closeEditModalBtn">&times;</button>
-            </div>
-            <form id="editClientForm" novalidate>
-                <div class="modal-body">
-                    <input type="hidden" id="originalNationalId">
-
-                    <div class="form-group">
-                        <label for="editClientName">
-                            <i class="fa-solid fa-user"></i> اسم المستخدم <span class="required-star">*</span>
-                        </label>
-                        <input type="text" id="editClientName" class="form-control" required>
-                        <span class="error-msg" id="editNameError"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editPhoneNumber">
-                            <i class="fa-solid fa-phone"></i> رقم الهاتف <span class="required-star">*</span>
-                        </label>
-                        <input type="tel" id="editPhoneNumber" class="form-control" required>
-                        <span class="error-msg" id="editPhoneError"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="editNationalId">
-                            <i class="fa-solid fa-id-card"></i> رقم الهوية <span class="required-star">*</span>
-                        </label>
-                        <input type="text" id="editNationalId" class="form-control" required>
-                        <span class="error-msg" id="editIdError"></span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="cancelEditBtn" class="btn btn-secondary">إلغاء</button>
-                    <button type="submit" id="saveEditBtn" class="btn btn-primary">
-                        <i class="fa-solid fa-check"></i> حفظ التعديلات
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- General Confirmation Modal -->
-    <div id="confirmModal" class="modal-backdrop hidden">
-        <div class="modal-content modal-dialog-confirm">
-            <div class="modal-header">
-                <h3 id="confirmModalTitle"><i class="fa-solid fa-triangle-exclamation text-warning"></i> تأكيد العملية</h3>
-                <button type="button" class="close-modal-btn" id="closeConfirmModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p id="confirmModalMessage">هل أنت متأكد من تنفيذ هذه العملية؟</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="confirmCancelBtn" class="btn btn-secondary">إلغاء</button>
-                <button type="button" id="confirmOkBtn" class="btn btn-danger">تأكيد</button>
-            </div>
-        </div>
     </div>
 
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="toast-container"></div>
 
-    <!-- Custom App Script -->
-    <script src="app.js"></script>
+    <script>
+        (function() {
+            'use strict';
+
+            const STORAGE_KEY = 'workday_tracker_db';
+
+            // Element References
+            const viewLog = document.getElementById('viewLog');
+            const viewSaved = document.getElementById('viewSaved');
+            const workDateInput = document.getElementById('workDate');
+            const workNotesInput = document.getElementById('workNotes');
+            const saveWorkdayBtn = document.getElementById('saveWorkdayBtn');
+            const navToSavedBtn = document.getElementById('navToSavedBtn');
+            const navToLogBtn = document.getElementById('navToLogBtn');
+            const totalDaysCount = document.getElementById('totalDaysCount');
+            const workdayListContainer = document.getElementById('workdayListContainer');
+            const toastContainer = document.getElementById('toastContainer');
+
+            // Initialize Date Picker to Today's Date
+            function setTodayDate() {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                workDateInput.value = `${year}-${month}-${day}`;
+            }
+
+            // Toast Message Function
+            function showToast(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+
+                const iconSvg = type === 'success'
+                    ? `<svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`
+                    : `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>`;
+
+                toast.innerHTML = `${iconSvg}<span>${escapeHtml(message)}</span>`;
+                toastContainer.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateY(10px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            // Storage Layer
+            function getWorkdays() {
+                try {
+                    const data = localStorage.getItem(STORAGE_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    console.error('Failed to parse workdays from localStorage:', e);
+                    return [];
+                }
+            }
+
+            function saveWorkdays(records) {
+                try {
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+                } catch (e) {
+                    console.error('Failed to save workdays to localStorage:', e);
+                    showToast('حدث خطأ في الحفظ في الذاكرة المحلية', 'danger');
+                }
+            }
+
+            // Navigation
+            function switchToView(viewName) {
+                if (viewName === 'saved') {
+                    viewLog.classList.add('hidden');
+                    viewSaved.classList.remove('hidden');
+                    renderSavedWorkdays();
+                } else {
+                    viewSaved.classList.add('hidden');
+                    viewLog.classList.remove('hidden');
+                }
+            }
+
+            // HTML Escaper for Safety
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            // Format Date String nicely for Arabic display
+            function formatArabicDate(dateStr) {
+                if (!dateStr) return '';
+                const parts = dateStr.split('-');
+                if (parts.length !== 3) return dateStr;
+
+                const year = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const day = parseInt(parts[2], 10);
+
+                const dateObj = new Date(year, month, day);
+
+                try {
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    return dateObj.toLocaleDateString('ar-EG', options);
+                } catch (e) {
+                    return dateStr;
+                }
+            }
+
+            // Save Entry Handler
+            function handleSaveWorkday() {
+                const dateValue = workDateInput.value;
+                const notesValue = workNotesInput.value.trim();
+
+                if (!dateValue) {
+                    showToast('يرجى تحديد تاريخ يوم العمل', 'danger');
+                    return;
+                }
+
+                const records = getWorkdays();
+
+                const newRecord = {
+                    id: Date.now().toString(),
+                    date: dateValue,
+                    notes: notesValue,
+                    createdAt: new Date().toISOString()
+                };
+
+                records.push(newRecord);
+                saveWorkdays(records);
+
+                showToast('تم تخزين يوم العمل بنجاح!', 'success');
+
+                // Reset form fields
+                setTodayDate();
+                workNotesInput.value = '';
+            }
+
+            // Delete Entry Handler
+            function handleDeleteWorkday(id) {
+                let records = getWorkdays();
+                records = records.filter(item => item.id !== id);
+                saveWorkdays(records);
+                showToast('تم حذف يوم العمل بنجاح', 'danger');
+                renderSavedWorkdays();
+            }
+
+            // Render Saved Workdays View
+            function renderSavedWorkdays() {
+                const records = getWorkdays();
+
+                // Update Total Count Badge
+                totalDaysCount.textContent = records.length;
+
+                if (records.length === 0) {
+                    workdayListContainer.innerHTML = `
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM11 12h2v5h-2z"/></svg>
+                            <p>لا توجد أي أيام عمل مسجلة حتى الآن.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Sort Chronologically from Newest to Oldest (by Date descending, then createdAt descending)
+                records.sort((a, b) => {
+                    if (a.date !== b.date) {
+                        return b.date.localeCompare(a.date);
+                    }
+                    return (b.createdAt || '').localeCompare(a.createdAt || '');
+                });
+
+                workdayListContainer.innerHTML = records.map(item => {
+                    const formattedDate = formatArabicDate(item.date);
+                    const notesHtml = item.notes ? `<div class="workday-notes">${escapeHtml(item.notes)}</div>` : '';
+
+                    return `
+                        <div class="workday-item">
+                            <div class="workday-details">
+                                <div class="workday-date-badge">
+                                    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10z"/></svg>
+                                    <span>${escapeHtml(formattedDate)}</span>
+                                </div>
+                                <div class="workday-subdate">${escapeHtml(item.date)}</div>
+                                ${notesHtml}
+                            </div>
+                            <button type="button" class="btn-danger-icon" data-id="${escapeHtml(item.id)}" title="حذف">
+                                <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                // Attach delete button event listeners
+                const deleteBtns = workdayListContainer.querySelectorAll('.btn-danger-icon');
+                deleteBtns.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = this.getAttribute('data-id');
+                        handleDeleteWorkday(id);
+                    });
+                });
+            }
+
+            // Initializations & Event Listeners
+            setTodayDate();
+
+            saveWorkdayBtn.addEventListener('click', handleSaveWorkday);
+            navToSavedBtn.addEventListener('click', () => switchToView('saved'));
+            navToLogBtn.addEventListener('click', () => switchToView('log'));
+
+        })();
+    </script>
 </body>
 </html>
