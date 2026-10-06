@@ -489,7 +489,7 @@
                     <h2>تسجيل يوم عمل جديد</h2>
                 </div>
 
-                <form id="workdayForm" onsubmit="return false;">
+                <form id="workdayForm">
                     <div class="form-group">
                         <label for="workDate">
                             <svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
@@ -697,6 +697,9 @@
 
             // Delete Entry Handler
             function handleDeleteWorkday(id) {
+                const confirmDelete = window.confirm('هل أنت متأكد من رغبتك في حذف يوم العمل هذا؟');
+                if (!confirmDelete) return;
+
                 let records = getWorkdays();
                 records = records.filter(item => item.id !== id);
                 saveWorkdays(records);
@@ -763,7 +766,12 @@
             // Initializations & Event Listeners
             setTodayDate();
 
-            saveWorkdayBtn.addEventListener('click', handleSaveWorkday);
+            const workdayForm = document.getElementById('workdayForm');
+            workdayForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleSaveWorkday();
+            });
+
             navToSavedBtn.addEventListener('click', () => switchToView('saved'));
             navToLogBtn.addEventListener('click', () => switchToView('log'));
 
