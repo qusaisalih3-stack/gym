@@ -566,6 +566,7 @@
             const viewLog = document.getElementById('viewLog');
             const viewSaved = document.getElementById('viewSaved');
             const workDateInput = document.getElementById('workDate');
+            const workdayForm = document.getElementById('workdayForm');
             const workNotesInput = document.getElementById('workNotes');
             const saveWorkdayBtn = document.getElementById('saveWorkdayBtn');
             const navToSavedBtn = document.getElementById('navToSavedBtn');
@@ -763,7 +764,11 @@
             // Initializations & Event Listeners
             setTodayDate();
 
-            saveWorkdayBtn.addEventListener('click', handleSaveWorkday);
+            workdayForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleSaveWorkday();
+            });
+
             navToSavedBtn.addEventListener('click', () => switchToView('saved'));
             navToLogBtn.addEventListener('click', () => switchToView('log'));
 
