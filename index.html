@@ -763,7 +763,12 @@
             // Initializations & Event Listeners
             setTodayDate();
 
-            saveWorkdayBtn.addEventListener('click', handleSaveWorkday);
+            const workdayForm = document.getElementById('workdayForm');
+            workdayForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                handleSaveWorkday();
+            });
+
             navToSavedBtn.addEventListener('click', () => switchToView('saved'));
             navToLogBtn.addEventListener('click', () => switchToView('log'));
 
